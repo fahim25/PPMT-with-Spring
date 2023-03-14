@@ -68,4 +68,9 @@ public class ProjectRepository implements CrudRepository<Project, Long> {
     public void deleteAll() {
 
     }
+
+    public Project findByProjectIdentifier(String projectId) {
+        return findByProjectIdentifier(projectId);
+    }
+
 }
