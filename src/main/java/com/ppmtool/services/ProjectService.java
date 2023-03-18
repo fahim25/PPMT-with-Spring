@@ -16,6 +16,7 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
+    /*Save Project*/
     public Project saveOrUpdateProject(Project project){
         try {
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
@@ -25,16 +26,19 @@ public class ProjectService {
         }
     }
 
+    /*Find By Project Identifier*/
     public Project findProjectByIdentifier(String projectId){
 
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
-
         if(project == null){
             throw new ProjectIdExceptions("Project ID '" + projectId +"' doesn't exists");
         }
-
         return project;
     }
 
+    /**/
+    public Iterable<Project> findAllProject(){
+        return projectRepository.findAll();
+    }
 
 }
