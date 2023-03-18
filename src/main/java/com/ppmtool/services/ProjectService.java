@@ -16,7 +16,7 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    /*Save Project*/
+    /*Save or Update Project*/
     public Project saveOrUpdateProject(Project project){
         try {
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
