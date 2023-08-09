@@ -2,18 +2,22 @@ package com.ppmtool.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+@Getter
+@Setter
 @Entity
 public class Project {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     @NotBlank(message="Project name is required")
     private String projectName;
     @NotBlank(message="Project Identifier is required")
@@ -31,16 +35,11 @@ public class Project {
     private Date cratedDate;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updatedDate;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+    private Backlog backlog;
+
 
     public Project() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getProjectName() {

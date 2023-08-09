@@ -1,7 +1,9 @@
 package com.ppmtool.services;
 
 import com.ppmtool.exceptions.ProjectIdExceptions;
+import com.ppmtool.model.Backlog;
 import com.ppmtool.model.Project;
+import com.ppmtool.repositories.BacklogRepository;
 import com.ppmtool.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
+    BacklogRepository backlogRepository;
+
     public ProjectService(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
     }
@@ -19,7 +23,19 @@ public class ProjectService {
     /*Save or Update Project*/
     public Project saveOrUpdateProject(Project project){
         try {
+
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+
+            /* if it long then it cant be write as == null */
+//            if( project.getId() == 0L ){
+            if( project.getId() == null ){
+                Backlog backlog = new Backlog();
+                project.setBacklog(backlog);
+                backlog.setProject(project);
+                backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+            } else {
+                project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
+            }
 
             return projectRepository.save(project);
         }catch (Exception e){

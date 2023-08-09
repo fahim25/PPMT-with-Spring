@@ -1,12 +1,10 @@
 package com.ppmtool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -21,7 +19,11 @@ public class Backlog {
 
     public Backlog() {
     }
-//One to one with project
+    //One to one with project
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_id", nullable = false)
+    @JsonIgnore
+    private Project project;
     //one to many project tasks
 
 }
