@@ -1,0 +1,41 @@
+package com.ppmtool.controller;
+
+import com.ppmtool.model.ProjectTask;
+import com.ppmtool.services.MapValidationService;
+import com.ppmtool.services.ProjectService;
+import com.ppmtool.services.ProjectTaskService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+@RestController
+@RequestMapping("/api/backlog")
+@CrossOrigin(origins = "http://localhost:3000/")
+public class BacklogController {
+
+    final ProjectTaskService projectTaskService;
+
+    final MapValidationService mapValidationService;
+
+    public BacklogController(ProjectTaskService projectTaskService, MapValidationService mapValidationService) {
+        this.projectTaskService = projectTaskService;
+        this.mapValidationService = mapValidationService;
+    }
+
+    @PostMapping("/{backlog_id}")
+    public ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask, @PathVariable String backlog_id , BindingResult result){
+
+        ResponseEntity<?> errorMap = mapValidationService.MapValidationService(result);
+
+        if(errorMap != null) return errorMap;
+
+        ProjectTask projectTask1 = projectTaskService.addProjectTask(backlog_id, projectTask);
+
+
+        return new ResponseEntity<ProjectTask>(projectTask1, HttpStatus.CREATED);
+    }
+
+}

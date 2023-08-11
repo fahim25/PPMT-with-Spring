@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,13 +19,18 @@ public class Backlog {
     private int PTSequence=0;
     private String projectIdentifier;
 
-    public Backlog() {
-    }
     //One to one with project
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
     @JsonIgnore
     private Project project;
     //one to many project tasks
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "backlog")
+    private List<ProjectTask> projectTaskList = new ArrayList<>();
+
+
+    public Backlog() {
+    }
+
 
 }
