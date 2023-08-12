@@ -16,7 +16,7 @@ public class ProjectTask {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(updatable = false)
-    private String PTSequence;
+    private String projectSequence;
 
     @NotBlank(message = "Please include a project summary.")
     private String summary;
@@ -36,7 +36,7 @@ public class ProjectTask {
     public String toString() {
         return "ProjectTask{" +
                 "id=" + id +
-                ", PTSequence='" + PTSequence + '\'' +
+                ", PTSequence='" + projectSequence + '\'' +
                 ", summary='" + summary + '\'' +
                 ", acceptanceCriteria='" + acceptanceCriteria + '\'' +
                 ", status='" + status + '\'' +

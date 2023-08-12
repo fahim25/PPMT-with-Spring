@@ -6,6 +6,8 @@ import com.ppmtool.repositories.BacklogRepository;
 import com.ppmtool.repositories.ProjectTaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectTaskService {
 
@@ -33,17 +35,23 @@ public class ProjectTaskService {
         //Update the BL SEQUENCE
         backlogSequence++;
 
+        backlog.setPTSequence(backlogSequence);
+
         //add sequence to project task
-        projectTask.setPTSequence(projectIdentifier+ "-"+backlogSequence);
+        projectTask.setProjectSequence(backlog.getProjectIdentifier()+ "-"+backlogSequence);
         projectTask.setProjectIdentifier(projectIdentifier);
 
         //INITIAL priority is null
+
         /*if(projectTask.getPriority()==0 || projectTask.getPriority()==null){
             projectTask.setPriority(3);
         }*/
+        if(projectTask.getPriority()==null){
+            projectTask.setPriority(3);
+        }
 
         //INITIAL status is null
-        if (projectTask.getStatus()=="" || projectTask.getStatus() == null){
+        if (projectTask.getStatus().equals("") || projectTask.getStatus() == null){
             projectTask.setStatus("TO_DO");
         }
 
@@ -51,4 +59,7 @@ public class ProjectTaskService {
     }
 
 
+    public Iterable<ProjectTask> findBacklogById(String id) {
+        return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
+    }
 }
