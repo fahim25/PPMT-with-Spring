@@ -33,9 +33,11 @@ public class ProjectService {
                 project.setBacklog(backlog);
                 backlog.setProject(project);
                 backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
-            } else {
-                project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
             }
+            /* having issue with update project */
+           /* else {
+                project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
+            }*/
 
             return projectRepository.save(project);
         }catch (Exception e){
