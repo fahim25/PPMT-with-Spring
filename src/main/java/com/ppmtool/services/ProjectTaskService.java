@@ -54,7 +54,7 @@ public class ProjectTaskService {
         /*if(projectTask.getPriority()==0 || projectTask.getPriority()==null){
             projectTask.setPriority(3);
         }*/
-            if(projectTask.getPriority()==null){
+            if(projectTask.getPriority() == 0 || projectTask.getPriority()==null){
                 projectTask.setPriority(3);
             }
 
